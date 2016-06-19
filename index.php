@@ -11,12 +11,14 @@ if ($baseState == false) {
         <meta charset="utf-8" />
         <title></title>
     </head>
-    <body onmouseover="testButton()">
+    <body>
         <div id="commentsBlock">Custom text.
             <p class="comment" id="body01"> In the space below you are allowed to place some comments. You can also comment eisting comments up to 5 subcomments.</p>
             <p class="comment" id="body00">Comments are situated below</p>
-            <p id="demo" onclick="new protoCom().postCom()"><b>CLICKME</b></p>
-
+            <!--<p id="demo" onclick="new protoCom().postCom()"><b>CLICKME</b></p>-->
+        <div>
+            <button id="testbutton" onclick="new protoCom().postCom()">Reply</button>
+        </div>
             <?php //require "copyPaster.php";?>
             <!--<p onclick="appender('body1', 'commentBase')" >Click to append submitted comment</p>-->
 
@@ -58,21 +60,24 @@ if ($baseState == false) {
         </script>
 
         <script>
-            function testButton() {
+            /*function apB() {
+            console.log('test')
+            var butt = document.createElement("BUTTON");
+            var buttNamae = document.createTextNode("Reply");
+            butt.appendChild(buttNamae);
+            butt.setAttribute("id", "testbutton")
+            butt.addEventListener("click", function () { new protoCom().postCom() });
+            return butt;
+            };*/
+            function apB(){
+                this.appendChild(document.getElementById("testbutton"))
+            }
+            (function testButton() {
                 var arr = document.getElementsByClassName("comment");
-                for(i=0;i<arr.length;i++) {
-                    document.getElementsByClassName("comment")[i].addEventListener("mouseover", apB(i), false);
+                for (i = 0; i < arr.length; i++) {
+                    arr[i].addEventListener("mouseenter", apB);
                 }
-            };
-            function apB(j) {
-                var butt = document.createElement("BUTTON");
-                var buttNamae = document.createTextNode("Reply");
-                butt.appendChild(buttNamae);
-                butt.setAttribute("id", "testbutton")
-                butt.addEventListener("click", function () { new protoCom().postCom() });
-                document.getElementsByClassName("comment")[j].appendChild(butt);
-            };
-            //testButton();
+            })();
         </script>
         
         <p id="commentBase"> 
@@ -84,6 +89,7 @@ if ($baseState == false) {
                 echo "$ccom";
             ?>
         </p>
+
 
         <div>
             <p onclick="alert('')" id="base255.0.0.0.0">accustomed</p>
