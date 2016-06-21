@@ -2,7 +2,9 @@
 $servername = "localhost";
 $username = "username";
 $password = "password";
+$nameDB = "db0";
 $baseState;
+$tablename = "table0";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password);
@@ -10,7 +12,7 @@ $conn = new mysqli($servername, $username, $password);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     // Create database
-    $sql = "CREATE DATABASE commentsDB";
+    $sql = "CREATE DATABASE $nameDB";
     if ($conn->query($sql) === true) {
         global $baseState;
         $baseState = true;
@@ -21,17 +23,31 @@ if ($conn->connect_error) {
 } else {
     global $baseState;
     $baseState = true;
+
+    $conn = new mysqli($servername, $username, $password, $nameDB);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    } 
+
+    $sql = "SELECT FROM $tablename";
+
+    if ($conn->query($sql) === false) {
+
+        $sql = "CREATE TABLE $tablename( 
+        id INT(5) PRIMARY KEY AUTO_INCREMENT, 
+        parid INT(5) UNSIGNED DEFAULT 0, 
+        name VARCHAR(255), 
+        messg VARCHAR(255)
+        )";
+
+        if ($conn->query($sql) === true) {
+        echo "Table created successfully";
+        } else {
+        //echo "Error creating table: " . $conn->error;
+        }
+    }
 }
-$conn->close();
+//$conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title></title>
-    </head>
-    <body>
-        
-    </body>
-</html>

@@ -17,33 +17,32 @@ if ($baseState == false) {
             <p class="comment" id="body00">Comments are situated below</p>
             <!--<p id="demo" onclick="new protoCom().postCom()"><b>CLICKME</b></p>-->
         <div>
-            <button id="testbutton" onclick="new protoCom().postCom()">Reply</button>
+            <button id="testbutton" onclick="this.parentNode.appendChild(document.getElementById('insertForm'))">Reply</button>
         </div>
-            <?php //require "copyPaster.php";?>
-            <!--<p onclick="appender('body1', 'commentBase')" >Click to append submitted comment</p>-->
 
         </div>
 
-        <form id="insertForm" method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+        <form  onload="postMessage()" id="insertForm" method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
             <fieldset>
                 <legend>Input your name(optional) and new comment</legend>
                 Name: <br>
                 <input type="text" name="posterName" value="Anonymous" onclick="this.value=''"><br>
+                <input type="hidden" name="parentId" value="">
                 Comment: <br>
-                <textarea name="customComment" id="customComment" style="height: 200px" required onclick="fitArea()">Write comment here.</textarea>
+                <textarea name="customComment" id="customComment" style="height: 100px; width: 450px" required onclick="this.innerHTML=''">Write comment here.</textarea>
                 <input type="submit" value="Send"><br>
             </fieldset>
         </form>
 
         
         <script>
-            function fitArea() {
+            /*function fitArea() {
                 var getFontSize = 16;
                 document.getElementById("customComment").innerHTML = '';
                 document.getElementById("customComment").style.width = Math.round(window.innerWidth * 0.45).toString() + "px";
                 document.getElementById("customComment").style.height =
                  (Math.round((500 * getFontSize) / (Math.round(window.innerWidth * 0.45)) + 1) * getFontSize).toString() + "px";
-            }
+            }*/
         </script>
         <script src="appender.js"></script>
 
@@ -60,24 +59,34 @@ if ($baseState == false) {
         </script>
 
         <script>
-            /*function apB() {
-            console.log('test')
-            var butt = document.createElement("BUTTON");
-            var buttNamae = document.createTextNode("Reply");
-            butt.appendChild(buttNamae);
-            butt.setAttribute("id", "testbutton")
-            butt.addEventListener("click", function () { new protoCom().postCom() });
-            return butt;
-            };*/
-            function apB(){
+            function apB() {
                 this.appendChild(document.getElementById("testbutton"))
             }
+
             (function testButton() {
                 var arr = document.getElementsByClassName("comment");
                 for (i = 0; i < arr.length; i++) {
                     arr[i].addEventListener("mouseenter", apB);
                 }
             })();
+            </script>
+
+        <script>
+            function sendId() {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.id = 'myId';
+
+            }
+        </script>
+            <script>
+            <?php
+                $ccom = $_POST['customComment'];
+                echo "            
+                function postMessage() {
+                var tehta = '$ccom';
+                console.log(tehta);
+            }";
+            ?>
         </script>
         
         <p id="commentBase"> 
@@ -89,10 +98,24 @@ if ($baseState == false) {
                 echo "$ccom";
             ?>
         </p>
-
-
         <div>
-            <p onclick="alert('')" id="base255.0.0.0.0">accustomed</p>
+            <button id="testbutton2" onclick="setTimeout(postMessage, 1000)">TimedReply</button>
         </div>
+
+        <?php
+            $posN = $_POST['posterName'];
+            $cComm = $_POST['customComment'];
+            $piD = $_POST['parentId'];
+            $sql = "INSERT INTO table0 (name, messg) VALUES ('$piD', '$posN', '$cComm');";
+
+            if ($conn->query($sql) === true) {
+            echo "New record created successfully";
+            } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+
+            $conn->close();
+        ?>
+
     </body>
 </html>

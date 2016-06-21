@@ -27,6 +27,7 @@ function protoCom(poster, comText, comTree){
         nodePoster.setAttribute("class", "comment");
         nodePoster.setAttribute("id", document.getElementsByClassName("comment").length - 2);
         //nodePoster.appendChild(documment.getElementById("testbutton"));
+        //nodePoster.addEventListener("mouseenter", apB);
         return nodePoster;
     };
     this.postCom = function () {

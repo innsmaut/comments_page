@@ -7,7 +7,6 @@
             <p><b>$pname</b> 
             <br> 
             $ccom</p>
-            <button onlick='addComButt()' >Reply</button>
            </p>
      ";
 
