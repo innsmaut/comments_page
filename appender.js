@@ -25,6 +25,7 @@ function protoCom(poster, comText, comTree){
         nodeComText.appendChild(document.createTextNode(this.comText));
         nodePoster.appendChild(nodeComText);
         nodePoster.setAttribute("class", "comment");
+        //nodePoster.setAttribute("id", comTree);
         nodePoster.setAttribute("id", document.getElementsByClassName("comment").length - 2);
         //nodePoster.appendChild(documment.getElementById("testbutton"));
         //nodePoster.addEventListener("mouseenter", apB);
@@ -32,17 +33,12 @@ function protoCom(poster, comText, comTree){
     };
     this.postCom = function () {
         if (this.id < 6) {
-            if (1 == 1) {
                 var cA = document.getElementsByClassName("comment");
                 var anchorId2;
                 if (document.getElementsByClassName("comment")[cA.length - 1].id == 'body00') { anchorId = 'body00'; anchorId2 = 0; }
                 else { anchorId = this.id - 1; anchorId2 = anchorId; }
                 document.getElementsByClassName("comment")[cA.length - 1].id
                 document.getElementById(anchorId).appendChild(comArr[anchorId2].gatherer());
-            } else {
-                //document.getElementById("commentsBlock").appendChild(this.gatherer());
-            }
-            this.id2++;
         } else alert("Comments limit has been reached");
     }
 }

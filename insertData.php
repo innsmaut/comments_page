@@ -1,14 +1,12 @@
 <?php
+            $sql = "SELECT * FROM table0;";
+            $result = $conn->query($sql);
+            if ($result === true) {
+            echo "<script>console.log('Comments are loaded successfully')</script>";
+            echo $result;
+            } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+            }
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title></title>
-    </head>
-    <body>
-        
-    </body>
-</html>
