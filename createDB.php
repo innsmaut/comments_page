@@ -32,19 +32,22 @@ if ($conn->connect_error) {
 
     $sql = "SELECT FROM $tablename";
 
-    if ($conn->query($sql) === false) {
+    if (!$conn->query($sql) === false) {
 
         $sql = "CREATE TABLE $tablename( 
-        id INT(5) PRIMARY KEY AUTO_INCREMENT, 
-        parid INT(5) UNSIGNED DEFAULT 0, 
-        name VARCHAR(255), 
-        messg VARCHAR(255)
-        )";
+        id INT AUTO_INCREMENT, 
+        parid INT DEFAULT 0, 
+        name VARCHAR(255) NOT NULL DEFAULT 'Anonymous', 
+        messg VARCHAR(255) NOT NULL DEFAULT '',
+        PRIMARY KEY (id),
+        FOREIGN KEY (parid)
+        REFERENCES $tablename (id)
+        ON DELETE CASCADE)";
 
         if ($conn->query($sql) === true) {
         echo "Table created successfully";
         } else {
-        //echo "Error creating table: " . $conn->error;
+        echo "Error creating table: " . $conn->error;
         }
     }
 }
@@ -52,4 +55,3 @@ if ($conn->connect_error) {
 
 //$conn->close();
 ?>
-

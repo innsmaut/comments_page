@@ -13,15 +13,16 @@ if ($baseState == false) {
     </head>
     <body>
         <div id="commentsBlock">Custom text.
-            <p class="comment" id="0"> In the space below you are allowed to place some comments. You can also comment eisting comments up to 5 subcomments.</p>
-        <div id="testbutton">
+            <div id="1">
+            <p class="comment" id="1"> In the space below you are allowed to place some comments. You can also comment eisting comments up to 5 subcomments.</p>
+            <div id="testbutton">
             <button onclick="forPlusId()">Reply</button>
             <form  method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
                 <input type="hidden" name="delId" value="0" id="delId">
-                <input type="submit" onmouseover="document.getElementsByName('delId')[0].id = document.getElementById('testbutton').parentNode.id" value="Delete">
-                <!--<button onclick="<?php //require 'deletion.php'; ?>">Delete</button>-->
+                <input type="submit" onmouseover="document.getElementsByName('delId')[0].value = document.getElementById('testbutton').parentNode.id" onclick="<?php include 'deletion.php'; ?>" value="Delete">
             </form>
-        </div>
+            </div>
+            </div>
         </div>
         <div hidden>
         <form  id="insertForm" method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
@@ -62,19 +63,37 @@ if ($baseState == false) {
                 return nodePoster;
             }
         </script>
+        <?php
+            $testa = $_POST[delId];
+            echo "deletionId is $testa"
+        ?>
         
 
         <?php
             $posN = $_POST['posterName'];
             $cComm = $_POST['customComment'];
             $piD = $_POST['parentId'];
+            $sql = "SET FOREIGN_KEY_CHECKS=0;";
+            $conn->query($sql);
             $sql = "INSERT INTO $tablename (parid, name, messg) VALUES ('$piD', '$posN', '$cComm');";
-
             if ($conn->query($sql) === true) {
             echo "New record created successfully";
             } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
             }
+            $sql = "SET FOREIGN_KEY_CHECKS=1;";
+            $conn->query($sql);
+            /*if($piD==0){
+                $sql = "INSERT INTO $tablename (id, parid, name, messg) VALUES ('1', $piD, '$posN', '$cComm');";
+            } else {
+                $sql = "INSERT INTO $tablename (parid, name, messg) VALUES ('$piD', '$posN', '$cComm');";
+            }
+            if ($conn->query($sql) === true) {
+            echo "New record created successfully";
+            } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+            }*/
+
 
             $sql = "SELECT * FROM $tablename ORDER BY parid, id";
             $result = $conn->query($sql);
