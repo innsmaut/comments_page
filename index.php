@@ -63,11 +63,6 @@ if ($baseState == false) {
                 return nodePoster;
             }
         </script>
-        <?php
-            $testa = $_POST[delId];
-            echo "deletionId is $testa"
-        ?>
-        
 
         <?php
             $posN = $_POST['posterName'];
@@ -75,7 +70,15 @@ if ($baseState == false) {
             $piD = $_POST['parentId'];
             $sql = "SET FOREIGN_KEY_CHECKS=0;";
             $conn->query($sql);
-            $sql = "INSERT INTO $tablename (parid, name, messg) VALUES ('$piD', '$posN', '$cComm');";
+            /*$sql = "INSERT INTO $tablename (parid, name, messg) VALUES ('$piD', '$posN', '$cComm');";
+            if ($conn->query($sql) === true) {
+            echo "New record created successfully";
+            } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+            }*/
+
+            if($piD==1){$selfid = $piD;}else{$selfid = $piD+1;};
+            $sql = "INSERT INTO '$nameDB'.'$tablename' ('id', 'parid', 'name', 'messg') VALUES ('$selfid', '$piD', '$posN', '$cComm');";
             if ($conn->query($sql) === true) {
             echo "New record created successfully";
             } else {
@@ -83,32 +86,21 @@ if ($baseState == false) {
             }
             $sql = "SET FOREIGN_KEY_CHECKS=1;";
             $conn->query($sql);
-            /*if($piD==0){
-                $sql = "INSERT INTO $tablename (id, parid, name, messg) VALUES ('1', $piD, '$posN', '$cComm');";
-            } else {
-                $sql = "INSERT INTO $tablename (parid, name, messg) VALUES ('$piD', '$posN', '$cComm');";
-            }
-            if ($conn->query($sql) === true) {
-            echo "New record created successfully";
-            } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-            }*/
-
 
             $sql = "SELECT * FROM $tablename ORDER BY parid, id";
             $result = $conn->query($sql);
             $len = $result->num_rows;
             for ($y=0;$y<$len;$y++){
                 $row = $result->fetch_assoc();
-                $parid[$y] = $row["parid"];
-                $name[$y] = $row["name"];
-                $messg[$y] = $row["messg"];
-                $sid[$y] = $row["id"];
+                $parid = $row["parid"];
+                $name = $row["name"];
+                $messg = $row["messg"];
+                $sid = $row["id"];
                 echo "
-                <ul id ='$sid[$y]' value='$parid[$y]' class='comment'>Author: $name[$y] Comment: $messg[$y]</ul>
+                <ul id ='$sid' value='$parid' class='comment'>Author: $name Comment: $messg</ul>
                 <script>
                     function fitall () {
-                    document.getElementById($parid[$y]).appendChild(document.getElementById($sid[$y]));
+                    document.getElementById($parid).appendChild(document.getElementById($sid));
                     };
                     fitall();
                 </script>

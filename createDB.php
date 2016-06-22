@@ -30,9 +30,9 @@ if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     } 
 
-    $sql = "SELECT FROM $tablename";
+    $sql = "SELECT * FROM $tablename";
 
-    if (!$conn->query($sql) === false) {
+    if ($conn->query($sql) === false) {
 
         $sql = "CREATE TABLE $tablename( 
         id INT AUTO_INCREMENT, 
@@ -53,5 +53,5 @@ if ($conn->connect_error) {
 }
 
 
-//$conn->close();
+$conn->close();
 ?>
