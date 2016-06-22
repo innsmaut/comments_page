@@ -34,16 +34,21 @@ if ($conn->connect_error) {
 
     if ($conn->query($sql) === false) {
 
-        $sql = "CREATE TABLE $tablename( 
-        id INT AUTO_INCREMENT, 
-        parid INT DEFAULT 0, 
+       /* $sql = "CREATE TABLE $tablename( 
+        id INT, 
+        parid INT, 
         name VARCHAR(255) NOT NULL DEFAULT 'Anonymous', 
         messg VARCHAR(255) NOT NULL DEFAULT '',
         PRIMARY KEY (id),
         FOREIGN KEY (parid)
         REFERENCES $tablename (id)
-        ON DELETE CASCADE)";
-
+        ON DELETE CASCADE)";*/
+        $sql = "CREATE TABLE $tablename( 
+        id INT, 
+        parid INT, 
+        name VARCHAR(255) NOT NULL DEFAULT 'Anonymous', 
+        messg VARCHAR(255) NOT NULL DEFAULT '',
+        PRIMARY KEY (id))";
         if ($conn->query($sql) === true) {
         echo "Table created successfully";
         } else {

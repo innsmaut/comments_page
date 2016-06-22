@@ -68,29 +68,17 @@ if ($baseState == false) {
             $posN = $_POST['posterName'];
             $cComm = $_POST['customComment'];
             $piD = $_POST['parentId'];
-            $sql = "SET FOREIGN_KEY_CHECKS=0;";
-            $conn->query($sql);
-            /*$sql = "INSERT INTO $tablename (parid, name, messg) VALUES ('$piD', '$posN', '$cComm');";
-            if ($conn->query($sql) === true) {
-            echo "New record created successfully";
-            } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-            }*/
 
-            if($piD==1){$selfid = $piD;}else{$selfid = $piD+1;};
-            $sql = "INSERT INTO '$nameDB'.'$tablename' ('id', 'parid', 'name', 'messg') VALUES ('$selfid', '$piD', '$posN', '$cComm');";
-            if ($conn->query($sql) === true) {
-            echo "New record created successfully";
+            //$sql = "SELECT * FROM $tablename ORDER BY parid, id;";
+            $sql = "SELECT * FROM $tablename;";
+            $result = $conn->query($sql);
+            $len = $result->num_rows;
+            if ($len>0) {
+            echo "New selected successfully";
             } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
             }
-            $sql = "SET FOREIGN_KEY_CHECKS=1;";
-            $conn->query($sql);
-
-            $sql = "SELECT * FROM $tablename ORDER BY parid, id";
-            $result = $conn->query($sql);
-            $len = $result->num_rows;
-            for ($y=0;$y<$len;$y++){
+            for ($y=1;$y<$len;$y++){
                 $row = $result->fetch_assoc();
                 $parid = $row["parid"];
                 $name = $row["name"];
@@ -103,9 +91,8 @@ if ($baseState == false) {
                     document.getElementById($parid).appendChild(document.getElementById($sid));
                     };
                     fitall();
-                </script>
-                ";
-                }
+                </script>";};
+            include 'push.php';
             $conn->close();
         ?>
 
